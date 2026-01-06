@@ -45,11 +45,11 @@
 ### 개발 진행하면서 확인한 추가 이슈
 
 1.  페이스북 인앱 브라우저에서 앱 열기 시도 → (앱이 설치되어있어도) 앱 설치 링크로 이동
-    페이스북의 '인앱 브라우저' 환경이 앱 실행을 위한 딥링크(Deep Link) 신호를 차단하거나 제대로 전달하지 못하기 때문이라는 추측(https://support.appsflyer.com/hc/ko/articles/208874366-%EC%BA%A0%ED%8E%98%EC%9D%B8%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%9B%90%EB%A7%81%ED%81%AC-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0#social-app-landing-page).<br/>
+    [페이스북의 '인앱 브라우저' 환경이 앱 실행을 위한 딥링크(Deep Link) 신호를 차단하거나 제대로 전달하지 못하기 때문](https://support.appsflyer.com/hc/ko/articles/208874366-%EC%BA%A0%ED%8E%98%EC%9D%B8%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%9B%90%EB%A7%81%ED%81%AC-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0#social-app-landing-page)이라는 추측.<br/>
     **→ af_force_deeplink=true 파라미터 추가해서 강제로 열도록 변경해서 해결**
     <br/>
     <br/>
-2.  Short URL + 파라미터 추가하는 방식(https://duse.atlassian.net/wiki/spaces/~712020233b74c8118440d3935edeafd763178b/pages/2087747588#%EC%9B%B9%EC%97%90%EC%84%9C-%EC%B0%BE%EC%95%84%EB%B3%B8-%EB%B0%A9%EC%8B%9D%EC%9D%80 1번 방식)으로 링크 공유하기 후 데스크탑에서 해당 링크 클릭 시 공유할 때 설정한 쿼리스트링이 누락되고 앱스플라이어에서 등록된 URL로만 이동되는 문제가 있음 ( → 쿼리스트링이 누락되었으니 next 미들웨어에서 의도한 페이지로 이동할 수 없음)
+2.  Short URL + 파라미터 추가하는 방식(위의 1번 방식)으로 링크 공유하기 후 데스크탑에서 해당 링크 클릭 시 공유할 때 설정한 쿼리스트링이 누락되고 앱스플라이어에서 등록된 URL로만 이동되는 문제가 있음 ( → 쿼리스트링이 누락되었으니 next 미들웨어에서 의도한 페이지로 이동할 수 없음)
 
     ```
     // 페이스북 공유 시 흐름
@@ -72,8 +72,9 @@
     **해결한 방식은,**<br/>
 
     그래서 공유하는 링크 자체를 변경해서 위 흐름을 타지 않고 ( `공유하기 리다이렉트 시킬 특정 페이지 URL` 공유 → 미들웨어 타도록) Next Middleware에서 판단할 수 있게 플로우 변경.
-
-> ⚠️ **참고 사이트**<br/><br/>
-> 카카오톡 공유하기 디버깅 도구: https://developers.kakao.com/tool/debugger/sharing<br/>
-> 페이스북 공유하기 디버깅 도구: https://developers.facebook.com/tools/debug<br/>
-> 페이스북 크롤러 디버깅 방법(크롬 기준):<br/>개발자 도구 → 네트워크 컨디션스 → `facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)` 설정 시 페이스북 공유하기를 통해 리다이렉트되는 과정을 확인할 수 있음.
+<br/>
+<br/>
+### ⚠️ 참고 사이트
+카카오톡 공유하기 디버깅 도구: https://developers.kakao.com/tool/debugger/sharing<br>
+페이스북 공유하기 디버깅 도구: https://developers.facebook.com/tools/debug<br/>
+페이스북 크롤러 디버깅 방법(크롬 기준):<br/>개발자 도구 → 네트워크 컨디션스 → `facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)` 설정 시 페이스북 공유하기를 통해 리다이렉트되는 과정을 확인할 수 있음.
