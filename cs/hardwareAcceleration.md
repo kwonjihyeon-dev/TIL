@@ -194,3 +194,6 @@ will-change의 효과:
   backface-visibility: hidden;
 }
 ```
+
+### 참고 사이트
+https://www.sitepoint.com/introduction-to-hardware-acceleration-css-animations/
