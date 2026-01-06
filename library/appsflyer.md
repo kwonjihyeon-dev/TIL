@@ -74,7 +74,7 @@
     그래서 공유하는 링크 자체를 변경해서 위 흐름을 타지 않고 ( `공유하기 리다이렉트 시킬 특정 페이지 URL` 공유 → 미들웨어 타도록) Next Middleware에서 판단할 수 있게 플로우 변경.
 <br/>
 <br/>
-### ⚠️ 참고 사이트
+### ⚠️ 참고 사이트<br/>
 카카오톡 공유하기 디버깅 도구: https://developers.kakao.com/tool/debugger/sharing<br>
 페이스북 공유하기 디버깅 도구: https://developers.facebook.com/tools/debug<br/>
 페이스북 크롤러 디버깅 방법(크롬 기준):<br/>개발자 도구 → 네트워크 컨디션스 → `facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)` 설정 시 페이스북 공유하기를 통해 리다이렉트되는 과정을 확인할 수 있음.
