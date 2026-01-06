@@ -50,29 +50,28 @@
     <br/>
     <br/>
 2.  Short URL + 파라미터 추가하는 방식(https://duse.atlassian.net/wiki/spaces/~712020233b74c8118440d3935edeafd763178b/pages/2087747588#%EC%9B%B9%EC%97%90%EC%84%9C-%EC%B0%BE%EC%95%84%EB%B3%B8-%EB%B0%A9%EC%8B%9D%EC%9D%80 1번 방식)으로 링크 공유하기 후 데스크탑에서 해당 링크 클릭 시 공유할 때 설정한 쿼리스트링이 누락되고 앱스플라이어에서 등록된 URL로만 이동되는 문제가 있음 ( → 쿼리스트링이 누락되었으니 next 미들웨어에서 의도한 페이지로 이동할 수 없음)
+
     ```
     // 페이스북 공유 시 흐름
 
-        1. 사용자가 원링크 공유
-        https://peterpanztown.onelink.me/nFCi/y48a036s?af_sub1=...
+    1. 사용자가 원링크 공유
+    https://peterpanztown.onelink.me/nFCi/y48a036s?af_sub1=...
 
-        2. AppsFlyer 서버에서 User-Agent 확인
+    2. AppsFlyer 서버에서 User-Agent 확인
 
-        3. 페이스북 크롤러 감지 시
-        → af-preview 페이지로 301 리다이렉트
-        https://peterpanztown.onelink.me/af-preview/facebook?url=...&ios_dp=...&android_dp=...
-        → 최종 목적지로 302 리다이렉트
+    3. 페이스북 크롤러 감지 시
+    → af-preview 페이지로 301 리다이렉트
+    https://peterpanztown.onelink.me/af-preview/facebook?url=...&ios_dp=...&android_dp=...
+    → 최종 목적지로 302 리다이렉트
 
-        4. 게시글 공유했을 때 최종 목적지 + 페이스북 자체적으로 URL을 변경키는 걸로 보임.
-        → 데스크탑: url 파라미터의 값으로 최종 리다이렉트
-        → 앱: 유저 에이젼트별로 앱 이동
-        ```
-        **해결한 방식은,**
+    4. 게시글 공유했을 때 최종 목적지 + 페이스북 자체적으로 URL을 변경키는 걸로 보임.
+    → 데스크탑: url 파라미터의 값으로 최종 리다이렉트
+    → 앱: 유저 에이젼트별로 앱 이동
+    ```
 
-        그래서 공유하는 링크 자체를 변경해서 위 흐름을 타지 않고 ( `공유하기 리다이렉트 시킬 특정 페이지 URL` 공유 → 미들웨어 타도록) Next Middleware에서 판단할 수 있게 플로우 변경.
+    **해결한 방식은,**<br/>
 
-    <br/>
-    <br/>
+    그래서 공유하는 링크 자체를 변경해서 위 흐름을 타지 않고 ( `공유하기 리다이렉트 시킬 특정 페이지 URL` 공유 → 미들웨어 타도록) Next Middleware에서 판단할 수 있게 플로우 변경.
 
 > ⚠️ **참고 사이트**<br/><br/>
 > 카카오톡 공유하기 디버깅 도구: https://developers.kakao.com/tool/debugger/sharing<br/>
