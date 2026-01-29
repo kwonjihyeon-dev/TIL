@@ -35,7 +35,7 @@ author: kwonjihyeon-dev
 
 # Yat 테마 설정
 yat:
-  date_format: "%Y-%b-%d"
+  date_format: "%Y-%m-%d"
 
 # 네비게이션 메뉴
 header_pages:
@@ -45,13 +45,6 @@ header_pages:
     - library/index.md
     - react/index.md
     - about.md
-
-# Page default value
-defaults:
-  home:
-    heading: "안녕하세요! 프론트엔드 권지현입니다."
-    subheading: "프론트엔드 권지현의 개발 기록"
-    banner: "/assets/images/home.jpeg"
 
 # 컬러 설정 (light / dark)
 # color_scheme: dark
