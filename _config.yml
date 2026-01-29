@@ -65,4 +65,4 @@ defaults:
           path: ''
           type: 'pages'
       values:
-          layout: page
+          layout: post
