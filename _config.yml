@@ -1,0 +1,66 @@
+# Site settings
+title: TIL
+tagline: Today I Learned
+description: 공부한 것, 경험한 것을 기록하는 메모장
+url: https://kwonjihyeon-dev.github.io
+baseurl: /TIL # 저장소 이름
+
+# Theme
+remote_theme: vszhub/not-pure-poole
+
+# Plugins
+plugins:
+    - jekyll-remote-theme
+    - jekyll-feed
+    - jekyll-seo-tag
+    - jekyll-paginate
+
+# Pagination
+paginate: 10
+paginate_path: /page:num/
+
+# Markdown
+markdown: kramdown
+kramdown:
+    input: GFM
+    syntax_highlighter: rouge
+
+# Author
+author:
+    name: kwonjihyeon-dev
+    email: kjh2868@gmail.com
+    # url: https://github.com/kwonjihyeon-dev
+
+# Date format
+date_format: '%Y-%m-%d'
+
+# Navigation links (상단 메뉴)
+navigation:
+    - title: Home
+      url: /
+    - title: Architecture
+      url: /architecture/
+    - title: CS
+      url: /cs/
+    - title: Library
+      url: /library/
+    - title: React
+      url: /react/
+    - title: About
+      url: /about/
+
+# Cover image (선택사항)
+cover_image: /assets/images/cover.gif
+
+# Defaults
+defaults:
+    - scope:
+          path: ''
+          type: 'posts'
+      values:
+          layout: post
+    - scope:
+          path: ''
+          type: 'pages'
+      values:
+          layout: page
