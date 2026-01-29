@@ -10,19 +10,19 @@ title: Home
 ## Categories
 
 ### [Architecture](/architecture/)
-- [Feature Sliced Design](architecture/feature-sliced-design.md)
+- [Feature Sliced Design](/architecture/feature-sliced-design)
 
 ### [CS](/cs/)
-- [Hardware Acceleration](cs/hardwareAcceleration.md)
-- [SVG in Safari](cs/SVG-in-Safari.md)
+- [Hardware Acceleration](/cs/hardwareAcceleration)
+- [SVG in Safari](/cs/SVG-in-Safari)
 
 ### [Library](/library/)
-- [Vitest](library/vitest.md)
-- [Zustand](library/zustand.md)
-- [AppsFlyer](library/appsflyer.md)
-- [Token Automation](library/token-automation.md)
+- [Vitest](/library/vitest)
+- [Zustand](/library/zustand)
+- [AppsFlyer](/library/appsflyer)
+- [Token Automation](/library/token-automation)
 
 ### [React](/react/)
-- [Error Boundary](react/ErrorBoundary.md)
-- [useTransition](react/hooks/useTransition.md)
-- [useSyncExternalStore](react/hooks/useSyncExternalStore.md)
+- [Error Boundary](/react/ErrorBoundary)
+- [useTransition](/react/hooks/useTransition)
+- [useSyncExternalStore](/react/hooks/useSyncExternalStore)

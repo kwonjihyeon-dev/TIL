@@ -10,5 +10,5 @@ permalink: /cs/
 
 ## Posts
 
-- [Hardware Acceleration](hardwareAcceleration.md)
-- [SVG in Safari](SVG-in-Safari.md)
+- [Hardware Acceleration](/cs/hardwareAcceleration)
+- [SVG in Safari](/cs/SVG-in-Safari)
