@@ -23,7 +23,6 @@ title: Home
 -   [Vitest](./library/vitest)
 -   [Zustand](./library/zustand)
 -   [AppsFlyer](./library/appsflyer)
--   [Token Automation](./library/token-automation)
 
 ### [React](./react/)
 
