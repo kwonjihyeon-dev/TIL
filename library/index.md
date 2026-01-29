@@ -10,7 +10,7 @@ permalink: /library/
 
 ## Posts
 
-- [Vitest](/library/vitest)
-- [Zustand](/library/zustand)
-- [AppsFlyer](/library/appsflyer)
-- [Token Automation](/library/token-automation)
+- [Vitest](./vitest)
+- [Zustand](./zustand)
+- [AppsFlyer](./appsflyer)
+- [Token Automation](./token-automation)

@@ -9,20 +9,24 @@ title: Home
 
 ## Categories
 
-### [Architecture](/architecture/)
-- [Feature Sliced Design](/architecture/feature-sliced-design)
+### [Architecture](./architecture/)
 
-### [CS](/cs/)
-- [Hardware Acceleration](/cs/hardwareAcceleration)
-- [SVG in Safari](/cs/SVG-in-Safari)
+-   [Feature Sliced Design](./architecture/feature-sliced-design)
 
-### [Library](/library/)
-- [Vitest](/library/vitest)
-- [Zustand](/library/zustand)
-- [AppsFlyer](/library/appsflyer)
-- [Token Automation](/library/token-automation)
+### [CS](./cs/)
 
-### [React](/react/)
-- [Error Boundary](/react/ErrorBoundary)
-- [useTransition](/react/hooks/useTransition)
-- [useSyncExternalStore](/react/hooks/useSyncExternalStore)
+-   [Hardware Acceleration](./cs/hardwareAcceleration)
+-   [SVG in Safari](./cs/SVG-in-Safari)
+
+### [Library](./library/)
+
+-   [Vitest](./library/vitest)
+-   [Zustand](./library/zustand)
+-   [AppsFlyer](./library/appsflyer)
+-   [Token Automation](./library/token-automation)
+
+### [React](./react/)
+
+-   [Error Boundary](./react/ErrorBoundary)
+-   [useTransition](./react/hooks/useTransition)
+-   [useSyncExternalStore](./react/hooks/useSyncExternalStore)

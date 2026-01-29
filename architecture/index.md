@@ -10,4 +10,4 @@ permalink: /architecture/
 
 ## Posts
 
-- [Feature Sliced Design](/architecture/feature-sliced-design)
+- [Feature Sliced Design](./feature-sliced-design)

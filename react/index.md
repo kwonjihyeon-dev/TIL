@@ -10,9 +10,9 @@ React 관련 학습 내용입니다.
 
 ## Posts
 
-- [Error Boundary](/react/ErrorBoundary)
+- [Error Boundary](./ErrorBoundary)
 
 ### Hooks
 
-- [useTransition](/react/hooks/useTransition)
-- [useSyncExternalStore](/react/hooks/useSyncExternalStore)
+- [useTransition](./hooks/useTransition)
+- [useSyncExternalStore](./hooks/useSyncExternalStore)

@@ -1,18 +1,18 @@
 source "https://rubygems.org"
 
-gem "jekyll", "~> 3.9"
+gem "jekyll", "~> 4.3"
 
 group :jekyll_plugins do
   gem "jekyll-remote-theme"
-  gem "jekyll-feed", "~> 0.13"
-  gem "jekyll-seo-tag", "~> 2.6"
-  gem "jekyll-paginate", "~> 1.1"
-  gem "jekyll-gist", "~> 1.5"
-  gem "jekyll-sitemap", "~> 1.4"
+  gem "jekyll-feed"
+  gem "jekyll-seo-tag"
+  gem "jekyll-paginate"
+  gem "jekyll-sitemap"
+  gem "jekyll-spaceship"
 end
 
-gem "kramdown-parser-gfm", "~> 1.1"
-gem "faraday-retry"
+gem "kramdown-parser-gfm"
+gem "webrick"
 
 # Windows and JRuby does not include zoneinfo files
 platforms :mingw, :x64_mingw, :mswin, :jruby do
@@ -21,4 +21,3 @@ platforms :mingw, :x64_mingw, :mswin, :jruby do
 end
 
 gem "wdm", "~> 0.1", :platforms => [:mingw, :x64_mingw, :mswin]
-gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
