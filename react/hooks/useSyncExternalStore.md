@@ -1,6 +1,7 @@
 ---
 layout: post
 title: useSyncExternalStore
+date: 2024-12-23
 ---
 
 # useSyncExternalStore

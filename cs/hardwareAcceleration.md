@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Hardware Acceleration
+date: 2026-01-06
 ---
 
 # Safari의 GPU 레이어 관리와 렌더링 문제

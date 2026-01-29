@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Feature Sliced Design
+date: 2024-12-16
 ---
 
 # 기능 분할 설계 - FSD(Feature Sliced Design)

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Error Boundary
+date: 2024-12-24
 ---
 
 ## Error Boundary

@@ -6,8 +6,6 @@ baseurl: /TIL
 
 # Theme
 remote_theme: jeffreytse/jekyll-theme-yat
-  
-date_format: "%Y-%m-%d"
 
 # Plugins
 plugins:
@@ -37,8 +35,8 @@ author: kwonjihyeon-dev
 
 # Yat 테마 설정
 # 헤더 배너 (기본값 사용)
-# heading_images:
-#     - /assets/images/cover.gif
+heading_images:
+    - /assets/images/home.jpeg
 
 # 네비게이션 메뉴
 header_pages:

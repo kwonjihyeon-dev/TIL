@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Vitest
+date: 2026-01-29
 ---
 
 # Vitest

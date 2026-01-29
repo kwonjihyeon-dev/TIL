@@ -1,6 +1,7 @@
 ---
 layout: post
 title: SVG in Safari
+date: 2026-01-22
 ---
 
 # Safari에서 SVG 이미지 픽셀화 문제 분석
