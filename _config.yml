@@ -49,8 +49,11 @@ navigation:
     - title: About
       url: /about/
 
-# Cover image (선택사항)
-cover_image: /assets/images/cover.gif
+# # Cover image (선택사항)
+# cover_image: /assets/images/cover.gif
+
+# Profile avatar
+avatar: /assets/images/cover.gif
 
 # Defaults
 defaults:
