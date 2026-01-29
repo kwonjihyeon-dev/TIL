@@ -1,3 +1,8 @@
+---
+layout: page
+title: Feature Sliced Design
+---
+
 # 기능 분할 설계 - FSD(Feature Sliced Design)
 
 프론트엔드 애플리케이션의 구조를 잡는 아키텍처 방법론

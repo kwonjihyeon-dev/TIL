@@ -1,3 +1,8 @@
+---
+layout: page
+title: Error Boundary
+---
+
 ## Error Boundary
 
 에러가 발생한 부분 대신 오류 메시지와 같은 fallback UI를 표시할 수 있는 특수 컴포넌트<br/>

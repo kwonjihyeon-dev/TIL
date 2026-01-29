@@ -1,3 +1,8 @@
+---
+layout: page
+title: SVG in Safari
+---
+
 # Safari에서 SVG 이미지 픽셀화 문제 분석
 
 Safari 브라우저에서 SVG 파일을 `<img src='**.svg' />`로 import할 때 `<img>` 태그와 SVG 파일 내부에 크기 속성이 모두 정의되어 있음에도 불구하고 이미지 해상도가 깨져보이는 현상이 발생합니다.

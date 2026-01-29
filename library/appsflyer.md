@@ -1,3 +1,8 @@
+---
+layout: page
+title: AppsFlyer
+---
+
 # Appsflyer
 
 - 앱 마케팅 성과 측정 및 사용자 행동 분석을 위한 핵심 도구

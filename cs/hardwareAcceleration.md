@@ -1,3 +1,8 @@
+---
+layout: page
+title: Hardware Acceleration
+---
+
 # Safari의 GPU 레이어 관리와 렌더링 문제
 
 1. [개요](#개요)
