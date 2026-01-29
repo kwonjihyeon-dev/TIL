@@ -6,6 +6,8 @@ baseurl: /TIL
 
 # Theme
 remote_theme: jeffreytse/jekyll-theme-yat
+  
+date_format: "%Y-%m-%d"
 
 # Plugins
 plugins:
@@ -29,6 +31,8 @@ kramdown:
 permalink: pretty
 
 # Author
+title: hyeonnny_log
+email: kjh2868@gmail.com
 author: kwonjihyeon-dev
 
 # Yat 테마 설정
@@ -36,7 +40,14 @@ author: kwonjihyeon-dev
 # heading_images:
 #     - /assets/images/cover.gif
 
-# 네비게이션 메뉴는 _data/navigation.yml에서 설정
+# 네비게이션 메뉴
+header_pages:
+    - index.md
+    - architecture/index.md
+    - cs/index.md
+    - library/index.md
+    - react/index.md
+    - about.md
 
 # 컬러 설정 (light / dark)
 # color_scheme: dark
