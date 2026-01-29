@@ -1,4 +1,4 @@
-# Vitest란?
+# Vitest
 
 Vite 기반의 빠르고 현대적인 단위 테스트 프레임워크입니다.<br/>Vite의 설정과 플러그인을 그대로 활용할 수 있어 별도의 복잡한 설정 없이 테스트 환경을 구축할 수 있습니다.
 
@@ -42,7 +42,7 @@ export default defineConfig({
 ### Setup과 Teardown
 
 테스트 실행 전후에 특정 작업을 자동으로 수행하는 기능으로 <u>테스트 환경을 준비하고 정리하는 용도</u>로 사용합니다.<br />
-기본적으로는 파일 단위 격리되어 동작하고, 전역 혹은 여러 파일에 공통 적용하려면 `vitest.config.ts`에 `setupFiles` 에 `setup.ts` 파일 경로를 지정해주면 됩니다.
+기본적으로는 <u>파일 단위로 격리</u>되어 동작하고, 전역 혹은 여러 파일에 공통 적용하려면 `vitest.config.ts`에 `setupFiles` 에 `setup.ts` 파일 경로를 지정해주면 됩니다.
 
 -   전역 + 로컬 파일 모두 있을 경우,<br/>
     전역 beforeAll → 로컬 beforeAll → 테스트 실행 → 로컬 afterAll -> 전역 afterAll 순서로 실행
