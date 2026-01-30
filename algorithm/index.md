@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Architecture
-permalink: /architecture/
+title: Algorithm
+permalink: /algorithm/
 ---
 
-# Architecture
+# Algorithm
 
-소프트웨어 아키텍처 관련 학습 내용입니다.
+알고리즘 관련 학습 내용입니다.
 
 ## Posts
 
-- [Feature Sliced Design](./feature-sliced-design)
+-   [Guide](./guide)

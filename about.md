@@ -14,3 +14,4 @@ permalink: /about/
 -   **CS**: 컴퓨터 과학 기초 지식
 -   **Library**: 라이브러리 사용법 및 팁
 -   **React**: React 관련 학습 내용
+-   **Algorithm**: Algorithm 관련 내용
