@@ -2,6 +2,9 @@
 layout: post
 title: useSyncExternalStore
 date: 2024-12-23
+references:
+  - title: React 공식 문서 - useSyncExternalStore
+    url: https://ko.react.dev/reference/react/useSyncExternalStore
 ---
 
 # useSyncExternalStore
@@ -69,6 +72,3 @@ function emitChange() {
 }
 ```
 
-<br/>
-
-[참고] https://ko.react.dev/reference/react/useSyncExternalStore

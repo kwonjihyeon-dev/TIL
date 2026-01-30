@@ -2,6 +2,9 @@
 layout: post
 title: Hardware Acceleration
 date: 2026-01-06
+references:
+  - title: Introduction to Hardware Acceleration CSS Animations
+    url: https://www.sitepoint.com/introduction-to-hardware-acceleration-css-animations/
 ---
 
 # Safari의 GPU 레이어 관리와 렌더링 문제
@@ -211,6 +214,3 @@ will-change의 효과:
 }
 ```
 
-### 참고 사이트
-
-https://www.sitepoint.com/introduction-to-hardware-acceleration-css-animations/

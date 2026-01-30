@@ -2,6 +2,11 @@
 layout: post
 title: Zustand
 date: 2024-12-23
+references:
+  - title: Zustand 동작 원리 (Toast UI)
+    url: https://ui.toast.com/weekly-pick/ko_20210812
+  - title: Zustand 동작 원리 (ingg.dev)
+    url: https://ingg.dev/zustand-work/
 ---
 
 # zustand
@@ -108,8 +113,3 @@ const createImpl = <T>(createState: StateCreator<T, [], []>) => {
 }
 ```
 
-<br/>
-
-[참고]<br/>
-https://ui.toast.com/weekly-pick/ko_20210812<br/>
-https://ingg.dev/zustand-work/
