@@ -29,3 +29,7 @@ title: Home
 -   [Error Boundary](./react/ErrorBoundary)
 -   [useTransition](./react/hooks/useTransition)
 -   [useSyncExternalStore](./react/hooks/useSyncExternalStore)
+
+### [Algorithm](./algorithm/)
+
+-   [guide](./algorithm/guide)
