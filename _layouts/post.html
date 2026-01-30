@@ -25,21 +25,6 @@ sidebar:
 
     {%- include views/article.html -%}
 
-    {%- if page.references -%}
-    <div class="post-references">
-      <div>References</div>
-      <ul>
-        {%- for ref in page.references -%}
-        <li>
-          <a href="{{ ref.url }}" target="_blank" rel="noopener noreferrer">
-            {{ ref.title }}
-          </a>
-        </li>
-        {%- endfor -%}
-      </ul>
-    </div>
-    {%- endif -%}
-
     {%- assign result = hidden | where_exp: "item", "item == 'navigator'" -%}
     {%- if result.size == 0 -%}
     <div class="post-nav">
@@ -70,6 +55,15 @@ sidebar:
     <div class="post-related">
       <div>Related Articles</div>
       <ul>
+        {%- if page.references -%}
+        {%- for ref in page.references -%}
+        <li class="external-link">
+          <a href="{{ ref.url }}" target="_blank" rel="noopener noreferrer">
+            {{ ref.title }}
+          </a>
+        </li>
+        {%- endfor -%}
+        {%- endif -%}
         {% assign posts = site[page.collection] | sample:4 %}
         {%- for post in posts -%}
           {%- assign post_item_class = "" -%}
