@@ -2,11 +2,14 @@
 layout: post
 title: SVG in Safari
 date: 2026-01-22
+references:
+  - title: SVG 아이콘이 사파리에서 픽셀화되어보이는 이유
+    url: https://medium.com/design-bootcamp/my-svg-icons-looked-pixelated-on-safari-heres-why-5a04e8eca731
 ---
 
 # Safari에서 SVG 이미지 픽셀화 문제 분석
 
-Safari 브라우저에서 SVG 파일을 `<img src='**.svg' />`로 import할 때 `<img>` 태그와 SVG 파일 내부에 크기 속성이 모두 정의되어 있음에도 불구하고 이미지 해상도가 깨져보이는 현상이 발생합니다.
+Safari 브라우저에서 SVG 파일을 `<img src='**.svg' />`형식으로 렌더링 할 때 `<img>` 태그와 SVG 파일 내부에 `width='' height=''` 와 같이 크기를 정하는 속성이 모두 정의되어 있음에도 불구하고 이미지 해상도가 깨져보이는 현상이 발생합니다.
 
 ## 픽셀화 발생 원인
 
@@ -159,8 +162,3 @@ Safari에서 SVG 픽셀화 문제는:
 1. **SVG가 프레임마다 래스터화**되며
 2. **레이아웃 엔진의 서브픽셀 크기 계산**과 **래스터화 시 정수 픽셀로의 변환 불일치**로 인해 발생
 
----
-
-### 참고사이트
-
-[SVG 아이콘이 사파리에서 픽셀화되어보이는 이유](https://medium.com/design-bootcamp/my-svg-icons-looked-pixelated-on-safari-heres-why-5a04e8eca731)
