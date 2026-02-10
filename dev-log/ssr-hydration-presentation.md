@@ -4,7 +4,7 @@ date: 2026-02-09
 tags: [Next.js, TanStack Query, SSR, Hydration, iOS WebView, 트러블슈팅]
 references:
   - title: Next.js App Router + TanStack Query SSR Hydration + Zustand 예제
-    url: ./next-tanstack-query-ssr-hydration.md
+    url: https://kwonjihyeon-dev.github.io/TIL/dev-log/next-tanstack-query-ssr-hydration
 ---
 
 # SSR Hydration 최적화 경험 정리
