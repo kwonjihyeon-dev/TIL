@@ -103,7 +103,40 @@ export async function getDehydratedQuery<T>({ queryKey, queryFn }: { queryKey: Q
 export const Hydrate = HydrationBoundary;
 ```
 
-### 4. ItemListContainer (Client Component)
+### 4. ListPage (Server Component)
+
+```typescript
+// app/list/page.tsx
+
+import { Suspense } from 'react';
+import { SearchParams } from '@/models/item';
+import queryOptions from '@/services/item/queries';
+import { Hydrate, getDehydratedQuery } from '@/utils/react-query/getDehydratedQuery';
+import ItemListContainer from '../../_components/itemList/container';
+import FilterBar from '../../_components/filter/container';
+import Loading from './loading';
+
+export default async function ListPage() {
+    const initSearchData: SearchParams = {
+        type: 'list',
+        sortBy: 'default',
+    };
+
+    const { queryKey, queryFn } = queryOptions.all(initSearchData);
+    const dehydratedState = await getDehydratedQuery({ queryKey, queryFn });
+
+    return (
+        <Hydrate state={dehydratedState}>
+            <FilterBar type={initSearchData.type} />
+            <Suspense fallback={<Loading />}>
+                <ItemListContainer initSearchData={initSearchData} />
+            </Suspense>
+        </Hydrate>
+    );
+}
+```
+
+### 5. ItemListContainer (Client Component)
 
 ```typescript
 // app/_components/list/ItemListContainer.tsx
@@ -143,39 +176,6 @@ export default function ItemListContainer({ initSearchData }: { initSearchData: 
                 </li>
             ))}
         </ul>
-    );
-}
-```
-
-### 5. ListPage (Server Component)
-
-```typescript
-// app/list/page.tsx
-
-import { Suspense } from 'react';
-import { SearchParams } from '@/models/item';
-import queryOptions from '@/services/item/queries';
-import { Hydrate, getDehydratedQuery } from '@/utils/react-query/getDehydratedQuery';
-import ItemListContainer from '../../_components/itemList/container';
-import FilterBar from '../../_components/filter/container';
-import Loading from './loading';
-
-export default async function ListPage() {
-    const initSearchData: SearchParams = {
-        type: 'list',
-        sortBy: 'default',
-    };
-
-    const { queryKey, queryFn } = queryOptions.all(initSearchData);
-    const dehydratedState = await getDehydratedQuery({ queryKey, queryFn });
-
-    return (
-        <Hydrate state={dehydratedState}>
-            <FilterBar type={initSearchData.type} />
-            <Suspense fallback={<Loading />}>
-                <ItemListContainer initSearchData={initSearchData} />
-            </Suspense>
-        </Hydrate>
     );
 }
 ```
