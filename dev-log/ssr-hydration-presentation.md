@@ -3,13 +3,11 @@ title: SSR Hydration 최적화 경험 정리
 date: 2026-02-09
 tags: [Next.js, TanStack Query, SSR, Hydration, iOS WebView, 트러블슈팅]
 references:
-  - title: Next.js App Router + TanStack Query SSR Hydration + Zustand 예제
-    url: https://kwonjihyeon-dev.github.io/TIL/dev-log/next-tanstack-query-ssr-hydration
+    - title: Next.js App Router + TanStack Query SSR Hydration + Zustand 예제
+      url: https://kwonjihyeon-dev.github.io/TIL/dev-log/next-tanstack-query-ssr-hydration
 ---
 
 # SSR Hydration 최적화 경험 정리
-
----
 
 ## 1. 배경: 목록 화면을 개발해야 했다
 
@@ -56,27 +54,23 @@ references:
 → 사용자가 필터를 변경할 때만 새로 fetch
 ```
 
-UX를 위한 선택이었고, 기술적으로도 합리적인 판단이었습니다.
-
 ---
 
 ## 4. 문제 발생: 오히려 느려졌다
 
 그런데 실제로 iOS WebView에 올려보니, **의도와 정반대의 결과**가 나왔습니다.
 
-### Chrome에서는 몰랐다
+### iOS WebView에서 드러난 문제
 
 개발 과정에서 Chrome 브라우저로 확인할 때는 문제를 인지하지 못했습니다. SSR이 정상 동작하는 것처럼 보였고, 데이터도 잘 표시되었습니다.
 
-### iOS WebView에서 드러난 문제
-
-하지만 실제 서비스 환경인 iOS 앱의 WebView에 얹으니, 사용자에게 보이는 흐름은 이랬습니다:
+하지만 iOS 앱 WebView에 얹으니, 사용자에게 보이는 흐름은 이랬습니다:
 
 **패턴 A**: 흰 화면이 비정상적으로 오래 노출 → 콘텐츠가 한번에 표시
 
 **패턴 B**: 흰 화면 → 비정상적으로 오래 노출되는 로딩바 → 콘텐츠
 
-둘 다 **SSR을 도입한 의미가 없는 수준**이었습니다.
+두 가지 패턴으로 화면이 그러졌는데 이 경우 둘 다 **SSR을 도입한 의미가 없는 수준**이었습니다.
 
 서버에서 데이터를 미리 가져왔는데도 흰 화면, 그리고 로딩바까지 오래 노출되고 디버깅해보니 클라이언트에서 같은 API를 다시 호출하는 상황이 발생했습니다.
 

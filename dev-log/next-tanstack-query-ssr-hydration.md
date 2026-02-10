@@ -3,8 +3,8 @@ title: Next.js App Router + TanStack Query SSR Hydration + Zustand 예제
 date: 2026-02-09
 tags: [Next.js, TanStack Query, SSR, Hydration, Zustand, App Router]
 references:
-  - title: SSR Hydration 최적화 경험 정리
-    url: https://kwonjihyeon-dev.github.io/TIL/dev-log/ssr-hydration-presentation
+    - title: SSR Hydration 최적화 경험 정리
+      url: https://kwonjihyeon-dev.github.io/TIL/dev-log/ssr-hydration-presentation
 ---
 
 # Next.js App Router + TanStack Query SSR Hydration + Zustand 예제
@@ -33,7 +33,121 @@ references:
 
 ## 구현
 
-### 1. ListPage (Server Component)
+### 1. API 서비스 레이어
+
+```typescript
+// services/item/itemService.ts
+
+import { ListResponse, SearchParams } from '@/models/item';
+
+class ItemService {
+    async getItems(searchData: SearchParams): Promise<ListResponse> {
+        const params = new URLSearchParams({
+            type: searchData.type,
+            ...(searchData.category && { category: searchData.category }),
+            ...(searchData.sortBy && { sort_by: searchData.sortBy }),
+        });
+
+        const res = await fetch(`/api/items?${params}`);
+        return res.json();
+    }
+}
+
+export default new ItemService();
+```
+
+### 2. React Query 옵션
+
+서버/클라이언트가 **동일한 queryKey + queryFn**을 사용하도록 한곳에서 관리한다.
+
+```typescript
+// services/item/queries.ts
+
+import { SearchParams } from '@/models/item';
+import itemService from './itemService';
+
+const queryKeys = {
+    all: (search: SearchParams) => ['items', search],
+};
+
+const queryOptions = {
+    all: (search: SearchParams) => ({
+        queryKey: queryKeys.all(search),
+        queryFn: () => itemService.getItems(search),
+    }),
+};
+
+export default queryOptions;
+```
+
+### 3. SSR Dehydration 유틸리티
+
+```typescript
+// utils/react-query/getDehydratedQuery.ts
+
+import { QueryClient, QueryKey, dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { cache } from 'react';
+
+export const getQueryClient = cache(() => new QueryClient());
+
+export async function getDehydratedQuery<T>({ queryKey, queryFn }: { queryKey: QueryKey; queryFn: () => Promise<T> }) {
+    const queryClient = getQueryClient();
+    await queryClient.prefetchQuery({ queryKey, queryFn });
+
+    const dehydratedState = dehydrate(queryClient);
+    const [target] = dehydratedState.queries.filter((q) => JSON.stringify(q.queryKey) === JSON.stringify(queryKey));
+
+    return { queries: [target], mutations: [] };
+}
+
+export const Hydrate = HydrationBoundary;
+```
+
+### 4. ItemListContainer (Client Component)
+
+```typescript
+// app/_components/list/ItemListContainer.tsx
+'use client';
+
+import { SearchParams } from '@/models/item';
+import { useItemFilter } from '@/hooks/useItemFilter';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import queryOptions from '@/services/item/queries';
+import { useFilterStore } from '@/stores/filterStore';
+import { useEffect, useState } from 'react';
+
+export default function ItemListContainer({ initSearchData }: { initSearchData: SearchParams }) {
+    const [isClient, setIsClient] = useState(false);
+    const { isFiltered } = useFilterStore();
+    const { searchData } = useItemFilter();
+
+    // 핵심: 초기에는 서버와 동일한 initSearchData → cache hit
+    // isClient=true 이후에는 Zustand searchData → 필터 변경 시 refetch
+    const { data } = useSuspenseQuery(queryOptions.all(isClient ? searchData : initSearchData));
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!data) return null;
+
+    if (data.count === 0) {
+        return isFiltered ? <p>필터 조건에 맞는 항목이 없습니다.</p> : <p>항목이 없습니다.</p>;
+    }
+
+    return (
+        <ul>
+            {data.results.map((item) => (
+                <li key={item.id}>
+                    {item.title} - {item.price}원
+                </li>
+            ))}
+        </ul>
+    );
+}
+```
+
+### 5. ListPage (Server Component)
 
 ```typescript
 // app/list/page.tsx
@@ -66,144 +180,7 @@ export default async function ListPage() {
 }
 ```
 
-### 2. ItemListContainer (Client Component)
-
-```typescript
-// app/_components/list/ItemListContainer.tsx
-'use client';
-
-import { SearchParams } from '@/models/item';
-import { useItemFilter } from '@/hooks/useItemFilter';
-import { useItems } from '@/services/item/useItemService';
-import { useFilterStore } from '@/stores/filterStore';
-import { useEffect, useState } from 'react';
-
-export default function ItemListContainer({ initSearchData }: { initSearchData: SearchParams }) {
-    const [isClient, setIsClient] = useState(false);
-    const { isFiltered } = useFilterStore();
-    const { searchData } = useItemFilter();
-
-    // 핵심: 초기에는 서버와 동일한 initSearchData → cache hit
-    //       isClient=true 이후에는 Zustand searchData → 필터 변경 시 refetch
-    const { data } = useItems(isClient ? searchData : initSearchData);
-
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
-
-    if (!data) return null;
-
-    if (data.count === 0) {
-        return isFiltered ? <p>필터 조건에 맞는 항목이 없습니다.</p> : <p>항목이 없습니다.</p>;
-    }
-
-    return (
-        <ul>
-            {data.results.map((item) => (
-                <li key={item.id}>
-                    {item.title} - {item.price}원
-                </li>
-            ))}
-        </ul>
-    );
-}
-```
-
-### 3. 모델 정의
-
-```typescript
-// models/item.ts
-
-export interface SearchParams {
-    type: 'list' | 'bookmark' | 'history';
-    category?: string;
-    sortBy?: string;
-}
-
-export interface Item {
-    id: number;
-    title: string;
-    price: number;
-    isBookmarked: boolean;
-}
-
-export interface ListResponse {
-    count: number;
-    results: Item[];
-}
-```
-
-### 4. API 서비스 레이어
-
-```typescript
-// services/item/itemService.ts
-
-import { ListResponse, SearchParams } from '@/models/item';
-
-class ItemService {
-    async getItems(searchData: SearchParams): Promise<ListResponse> {
-        const params = new URLSearchParams({
-            type: searchData.type,
-            ...(searchData.category && { category: searchData.category }),
-            ...(searchData.sortBy && { sort_by: searchData.sortBy }),
-        });
-
-        const res = await fetch(`/api/items?${params}`);
-        return res.json();
-    }
-}
-
-export default new ItemService();
-```
-
-### 5. React Query 옵션
-
-서버/클라이언트가 **동일한 queryKey + queryFn**을 사용하도록 한곳에서 관리한다.
-
-```typescript
-// services/item/queries.ts
-
-import { SearchParams } from '@/models/item';
-import itemService from './itemService';
-
-const queryKeys = {
-    all: (search: SearchParams) => ['items', search],
-};
-
-const queryOptions = {
-    all: (search: SearchParams) => ({
-        queryKey: queryKeys.all(search),
-        queryFn: () => itemService.getItems(search),
-    }),
-};
-
-export default queryOptions;
-```
-
-### 6. SSR Dehydration 유틸리티
-
-```typescript
-// utils/react-query/getDehydratedQuery.ts
-
-import { QueryClient, QueryKey, dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { cache } from 'react';
-
-export const getQueryClient = cache(() => new QueryClient());
-
-export async function getDehydratedQuery<T>({ queryKey, queryFn }: { queryKey: QueryKey; queryFn: () => Promise<T> }) {
-    const queryClient = getQueryClient();
-    await queryClient.prefetchQuery({ queryKey, queryFn });
-
-    const dehydratedState = dehydrate(queryClient);
-    const [target] = dehydratedState.queries.filter((q) => JSON.stringify(q.queryKey) === JSON.stringify(queryKey));
-
-    return { queries: [target], mutations: [] };
-}
-
-export const Hydrate = HydrationBoundary;
-```
-
-### 7. Zustand 필터 스토어
+### 6. Zustand 필터 스토어
 
 ```typescript
 // stores/filterStore.ts
@@ -238,7 +215,7 @@ export const useFilterStore = create<FilterState & FilterAction>((set) => ({
 }));
 ```
 
-### 8. 필터 → 검색 파라미터 변환 훅
+### 7. 필터 → 검색 파라미터 변환 훅
 
 ```typescript
 // hooks/useItemFilter.ts
@@ -259,17 +236,27 @@ export const useItemFilter = () => {
 };
 ```
 
-### 9. React Query 커스텀 훅
+### 8. 모델 정의
 
 ```typescript
-// services/item/useItemService.ts
+// models/item.ts
 
-import { SearchParams } from '@/models/item';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import queryOptions from './queries';
+export interface SearchParams {
+    type: 'list' | 'bookmark' | 'history';
+    category?: string;
+    sortBy?: string;
+}
 
-export function useItems(searchData: SearchParams) {
-    return useSuspenseQuery(queryOptions.all(searchData));
+export interface Item {
+    id: number;
+    title: string;
+    price: number;
+    isBookmarked: boolean;
+}
+
+export interface ListResponse {
+    count: number;
+    results: Item[];
 }
 ```
 
@@ -294,14 +281,14 @@ const { searchData } = useItemFilter();
 // Zustand 초기값 → { type: 'list', category: '', sortBy: 'default' }
 // → queryKey: ['items', { type: 'list', category: '', sortBy: 'default' }]
 
-const { data } = useItems(searchData);
+const { data } = useSuspenseQuery(queryOptions.all(searchData));
 // ❌ queryKey가 다르므로 cache miss → 같은 API를 다시 호출!
 ```
 
 ```typescript
 // ✅ isClient 플래그로 hydration 시점에는 서버와 동일한 값을 사용
 const [isClient, setIsClient] = useState(false);
-const { data } = useItems(isClient ? searchData : initSearchData);
+const { data } = useSuspenseQuery(queryOptions.all(isClient ? searchData : initSearchData));
 
 useEffect(() => {
     setIsClient(true);
