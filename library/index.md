@@ -12,5 +12,4 @@ permalink: /library/
 
 - [Vitest](./vitest)
 - [Zustand](./zustand)
-- [AppsFlyer](./appsflyer)
 - [Token Automation](./token-automation)

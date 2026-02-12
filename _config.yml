@@ -42,9 +42,9 @@ header_pages:
     - index.md
     - architecture/index.md
     - cs/index.md
+    - dev-log/index.md
     - library/index.md
     - react/index.md
-    - about.md
 
 # 컬러 설정 (light / dark)
 # color_scheme: dark
