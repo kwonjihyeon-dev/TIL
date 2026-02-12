@@ -101,6 +101,71 @@ requestAnimationFrame(() => {
 
 -   **문제점**: 라우터 이동은 가능하지만 가상 키보드가 검색 화면으로 이동 전에 미리 노출되는 상황 발생
 
+<br />
+
 ## 결론
 
 iOS Safari의 가상 키보드 정책은 "사용자가 직접 input을 터치해야 키보드가 뜬다"로 요약된다. 페이지 마운트 시에 자동으로 키보드를 띄우려면, **전환 트리거 자체가 input의 직접적인 터치 이벤트**여야 한다.
+
+<br />
+
+## 참고
+
+### Vue vs React
+
+같은 `focus()` 호출이라도 Vue에서는 키보드가 뜨고 React에서는 뜨지 않는 경우가 있다. 이는 각 프레임워크의 **내부 DOM 업데이트 스케줄링** 차이 때문이다.
+
+### Vue의 DOM 업데이트
+
+```
+사용자 탭 → click handler → 상태 변경 → DOM 동기 패치 → $nextTick (microtask) → focus()
+└──────────────────── 같은 microtask checkpoint ─────────────────────────────────┘
+```
+
+Vue는 상태 변경 시 **DOM을 동기적으로 패치**하고, `$nextTick`은 `Promise.resolve()` 기반 **microtask**이다. 전체 흐름이 같은 microtask checkpoint 안에서 완료되어 iOS가 gesture 체인으로 인정한다.
+
+### React의 DOM 업데이트
+
+```
+사용자 탭 → click handler → setState → [스케줄러 대기] → reconciliation → commit → focus()
+                                        └─ MessageChannel (macrotask) ─┘
+```
+
+React 18+는 내부 스케줄러가 **`MessageChannel`(macrotask)** 로 렌더링을 스케줄링한다. 상태 변경 → 실제 DOM 커밋 사이에 macrotask 경계가 생기면서 gesture 체인이 끊어진다.
+
+### 이벤트 루프 관점
+
+```
+이벤트 루프:
+[사용자 탭] → [동기 코드] → [microtask] → [렌더링] → [macrotask]
+               Vue: 여기서 DOM 패치 ──→ 여기서 focus
+                                                      React: 여기서 commit + focus
+              ├──── gesture 체인 유지 ────┤            ├── gesture 체인 끊김 ──┤
+```
+
+### React의 `autoFocus`가 동작하지 않는 이유
+
+React는 JSX의 `autoFocus` prop을 네이티브 HTML `autofocus` 속성으로 전달하지 않고, 커밋 단계에서 프로그래밍적으로 `.focus()`를 호출한다. 이 커밋 단계가 macrotask에서 실행되므로 gesture 체인 밖에 있다.
+
+```tsx
+// React 내부 동작
+<input autoFocus />
+// → 네이티브 autofocus 속성이 아닌 commitPhase에서 element.focus() 호출
+
+// 실제 DOM element
+<input autofocus />
+// → DOM에 autofocus 속성이 있는 이유는 React가 JSX prop을 DOM 속성으로 매핑하는 일반적인 동작의 일부이기 때문입니다. 하지만 HTML 네이티브 autofocus는 최초 페이지 로드 시에만 브라우저가 처리합니다. SPA 라우팅으로 컴포넌트가 마운트될 때는 브라우저가 이 속성을 무시합니다.
+
+```
+
+### 비교 정리
+
+|                                   | Vue                     | React 18+                  |
+| --------------------------------- | ----------------------- | -------------------------- |
+| DOM 패치 타이밍                   | 동기                    | 스케줄러 기반 (비동기)     |
+| focus 실행 시점                   | microtask (`$nextTick`) | macrotask (MessageChannel) |
+| gesture 체인                      | 유지                    | 끊김                       |
+| 같은 페이지 내 input 토글 + focus | **키보드 O**            | **키보드 X**               |
+
+<br />
+Vue에서는 동기 DOM 패치 + microtask 기반 `$nextTick` 덕분에 프로그래밍적 focus로도 키보드가 활성화되는 경우가 있지만, React 18+에서는 macrotask 기반 스케줄링으로 인해 동일한 방식이 동작하지 않는다.
