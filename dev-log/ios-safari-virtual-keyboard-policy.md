@@ -1,3 +1,9 @@
+---
+title: iOS Safari 가상 키보드 정책과 해결 방법
+date: 2026-02-12
+tags: [iOS, Safari, WebView, Virtual Keyboard, React, Vue]
+---
+
 # iOS Safari 가상 키보드 정책과 해결 방법
 
 ## 문제 상황
