@@ -16,6 +16,7 @@ title: Home
 ### [CS](./cs/)
 
 -   [Hardware Acceleration](./cs/hardwareAcceleration)
+-   [JavaScript 이벤트 루프 구조](./cs/javascript-event-loop)
 -   [SVG in Safari](./cs/SVG-in-Safari)
 
 ### [Dev Log](./dev-log/)
@@ -33,6 +34,7 @@ title: Home
 ### [React](./react/)
 
 -   [Error Boundary](./react/ErrorBoundary)
+-   [React의 상태 관리와 이벤트 루프](./react/react-state-with-event-loop)
 -   [useTransition](./react/hooks/useTransition)
 -   [useSyncExternalStore](./react/hooks/useSyncExternalStore)
 

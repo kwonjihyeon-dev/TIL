@@ -11,4 +11,5 @@ permalink: /cs/
 ## Posts
 
 - [Hardware Acceleration](./hardwareAcceleration)
+- [JavaScript 이벤트 루프 구조](./javascript-event-loop)
 - [SVG in Safari](./SVG-in-Safari)
