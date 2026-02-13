@@ -18,7 +18,19 @@ tags: [iOS, Safari, WebView, Virtual Keyboard, React, Vue]
 
 1. 사용자의 **물리적 터치(탭)** 이벤트가 발생해야 한다
 2. 해당 이벤트 핸들러의 **동기 실행 흐름** 안에서 `focus()`가 호출되어야 한다
-3. 비동기 작업(`setTimeout`, `Promise`, `requestAnimationFrame` 등)을 거치면 gesture 체인이 끊어진다
+3. 비동기 작업(`setTimeout`, `Promise`, `requestAnimationFrame` 등)을 거치면 <u>gesture 체인</u>이 끊어진다
+
+### gesture 체인이 끊어지는 이유
+
+브라우저의 **User Activation(사용자 활성화)** 보안 모델 때문이다. 브라우저는 사용자 의도를 보호하기 위해 특정 API를 아무 때나 호출하지 못하도록 제한한다:
+
+-   가상 키보드 활성화 (iOS는 이 정책을 특히 엄격하게 적용)
+-   `window.open()` (팝업)
+-   `navigator.clipboard` (클립보드 접근)
+-   Fullscreen 전환
+-   오디오/비디오 자동 재생
+
+이런 API를 제한 없이 허용하면 광고 팝업, 피싱 키보드, 원치 않는 자동 재생 등이 가능해진다. 그래서 "사용자가 방금 직접 상호작용했다"는 것이 보장될 때만 허용한다.
 
 ### 동작하는 경우 vs 동작하지 않는 경우
 
@@ -157,12 +169,27 @@ React는 JSX의 `autoFocus` prop을 네이티브 HTML `autofocus` 속성으로 �
 // React 내부 동작
 <input autoFocus />
 // → 네이티브 autofocus 속성이 아닌 commitPhase에서 element.focus() 호출
+```
 
-// 실제 DOM element
-<input autofocus />
-// → DOM에 autofocus 속성이 있는 이유는 React가 JSX prop을 DOM 속성으로 매핑하는 일반적인 동작의 일부이기 때문입니다. 하지만 HTML 네이티브 autofocus는 최초 페이지 로드 시에만 브라우저가 처리합니다. SPA 라우팅으로 컴포넌트가 마운트될 때는 브라우저가 이 속성을 무시합니다.
+DOM에는 `autofocus` 속성이 남아있지만, 이는 React가 JSX prop을 DOM 속성으로 매핑하는 일반적인 동작의 일부다. HTML 네이티브 `autofocus`는 최초 페이지 로드 시에만 브라우저가 처리하며, SPA 라우팅으로 컴포넌트가 마운트될 때는 브라우저가 이 속성을 무시한다.
+
+### 왜 macrotask에서 끊기는가
+
+브라우저는 사용자 터치가 발생하면 내부적으로 **transient activation(일시적 활성화)** 플래그를 설정한다. 이 플래그의 유효 범위가 핵심이다:
 
 ```
+[사용자 탭] → 이벤트 핸들러 실행 → microtask 소진 → 렌더링
+├── 같은 "task" ──────────────────────────────────┤
+
+                                                    [다음 macrotask]
+                                                    ├── 새로운 "task" = 사용자가 트리거한 것인지 보장할 수 없음 ──┤
+```
+
+이벤트 루프에서 하나의 task는 "동기 코드 실행 → microtask queue 소진"까지다. 이 범위 안에서는 "사용자의 터치로 인해 실행된 코드"라는 인과관계가 명확하다.
+
+하지만 macrotask(`setTimeout`, `MessageChannel` 등)는 이벤트 루프의 다음 턴에서 실행된다. 이 시점에서는 그 코드가 사용자 터치의 직접적인 결과인지, 타이머나 네트워크 응답 같은 다른 트리거에 의한 것인지 브라우저가 구분할 수 없다.
+
+<br />
 
 ### 비교 정리
 
@@ -173,5 +200,4 @@ React는 JSX의 `autoFocus` prop을 네이티브 HTML `autofocus` 속성으로 �
 | gesture 체인                      | 유지                    | 끊김                       |
 | 같은 페이지 내 input 토글 + focus | **키보드 O**            | **키보드 X**               |
 
-<br />
 Vue에서는 동기 DOM 패치 + microtask 기반 `$nextTick` 덕분에 프로그래밍적 focus로도 키보드가 활성화되는 경우가 있지만, React 18+에서는 macrotask 기반 스케줄링으로 인해 동일한 방식이 동작하지 않는다.
