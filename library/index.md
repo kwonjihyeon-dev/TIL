@@ -12,4 +12,4 @@ permalink: /library/
 
 - [Vitest](./vitest)
 - [Zustand](./zustand)
-- [Token Automation](./token-automation)
+- [디자인 토큰 자동화](./design-token-automation)

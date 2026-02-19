@@ -28,6 +28,7 @@ title: Home
 
 ### [Library](./library/)
 
+-   [디자인 토큰 자동화](./library/design-token-automation)
 -   [Vitest](./library/vitest)
 -   [Zustand](./library/zustand)
 
