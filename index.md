@@ -12,7 +12,7 @@ title: Home
 ### [Architecture](./architecture/)
 
 -   [Feature Sliced Design](./architecture/feature-sliced-design)
--   [Design Pattern - Observer vs Pub/Sub](./design-pattern-observer-pub-sub)
+-   [Design Pattern - Observer vs Pub/Sub](./architecture/design-pattern-observer-pub-sub)
 
 ### [CS](./cs/)
 
