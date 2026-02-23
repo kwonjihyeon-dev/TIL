@@ -10,4 +10,5 @@ permalink: /architecture/
 
 ## Posts
 
-- [Feature Sliced Design](./feature-sliced-design)
+-   [Feature Sliced Design](./feature-sliced-design)
+-   [Design Pattern - Observer vs Pub/Sub](./design-pattern-observer-pub-sub)
