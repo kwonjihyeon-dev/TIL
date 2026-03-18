@@ -14,3 +14,4 @@ permalink: /dev-log/
 - [iOS Safari Virtual Keyboard Policy](./ios-safari-virtual-keyboard-policy)
 - [Next.js + TanStack Query SSR Hydration](./next-tanstack-query-ssr-hydration)
 - [SSR Hydration 최적화 경험 정리](./ssr-hydration-presentation)
+- [GitHub Dependabot 도입기 - 보안 취약점 자동 모니터링](./security-monitoring)
