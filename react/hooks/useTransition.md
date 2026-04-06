@@ -2,6 +2,9 @@
 layout: post
 title: useTransition
 date: 2024-12-24
+references:
+  - title: 검색 렌더링 최적화 과정
+    url: https://kwonjihyeon-dev.github.io/TIL/dev-log/search-optimization
 ---
 
 # useTransition

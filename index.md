@@ -27,6 +27,7 @@ title: Home
 -   [Next.js + TanStack Query SSR Hydration](./dev-log/next-tanstack-query-ssr-hydration)
 -   [SSR Hydration 최적화 경험 정리](./dev-log/ssr-hydration-presentation)
 -   [GitHub Dependabot 도입기 - 보안 취약점 자동 모니터링](./dev-log/security-monitoring)
+-   [검색 렌더링 최적화 과정](./dev-log/search-optimization)
 
 ### [Library](./library/)
 
