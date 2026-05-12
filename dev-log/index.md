@@ -19,3 +19,4 @@ permalink: /dev-log/
 -   [iOS Safari Sticky Hover 이슈](./ios-safari-sticky-hover)
 -   [iOS Safari 바텀시트 배경 스크롤 잠금](./ios-safari-bottom-sheet-scroll-lock)
 -   [모바일 스크롤 아키텍처 마이그레이션](./mobile-scroll-migration)
+-   [A/B 테스트 적용기](./ab-test-applied)
