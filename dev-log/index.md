@@ -21,3 +21,4 @@ permalink: /dev-log/
 -   [모바일 스크롤 아키텍처 마이그레이션](./mobile-scroll-migration)
 -   [A/B 테스트 적용기](./ab-test-applied)
 -   [Playwright E2E 자동화 적용기 - 1](./playwright-storageState-e2e)
+-   [Playwright E2E 자동화 적용기 - 2](./e2e-test-sync-automation)
