@@ -34,6 +34,7 @@ title: Home
 -   [모바일 스크롤 아키텍처 마이그레이션](./dev-log/mobile-scroll-migration)
 -   [A/B 테스트 적용기](./dev-log/ab-test-applied)
 -   [Playwright E2E 자동화 적용기 - 1](./dev-log/playwright-storageState-e2e)
+-   [Playwright E2E 자동화 적용기 - 2](./dev-log/e2e-test-sync-automation)
 
 ### [Library](./library/)
 
