@@ -13,3 +13,4 @@ permalink: /library/
 - [Vitest](./vitest)
 - [Zustand](./zustand)
 - [디자인 토큰 자동화](./design-token-automation)
+- [Next.js App Router 동적 렌더링과 페이지 전환 지연](./next-dynamic-rendering-navigation)

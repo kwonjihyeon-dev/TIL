@@ -39,6 +39,7 @@ title: Home
 -   [디자인 토큰 자동화](./library/design-token-automation)
 -   [Vitest](./library/vitest)
 -   [Zustand](./library/zustand)
+-   [Next.js App Router 동적 렌더링과 페이지 전환 지연](./library/next-dynamic-rendering-navigation)
 
 ### [React](./react/)
 
