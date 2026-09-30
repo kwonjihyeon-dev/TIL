@@ -19,6 +19,7 @@ title: Home
 -   [Hardware Acceleration](./cs/hardwareAcceleration)
 -   [JavaScript 이벤트 루프 구조](./cs/javascript-event-loop)
 -   [SVG in Safari](./cs/SVG-in-Safari)
+-   [브라우저 렌더링 파이프라인과 컴포지팅](./cs/browser-rendering-composite)
 
 ### [Dev Log](./dev-log/)
 
